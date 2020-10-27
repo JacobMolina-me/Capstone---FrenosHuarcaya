@@ -7,7 +7,7 @@
 				<form id="form">
 					<div id="user-info">
 						<div class="form-field">
-							<input required class="form-control" type="text" name="name" placeholder="Nombre..">
+							<input required class="form-control" type="text" name="name" placeholder="Name..">
 						</div>
 						<div class="form-field">
 							<input required class="form-control" type="email" name="email" placeholder="Email..">
@@ -16,22 +16,22 @@
 					
 					<div id="shipping-info">
 						<hr>
-						<p>Información de envio</p>
+						<p>Shipping Information:</p>
 						<hr>
 						<div class="form-field">
-							<input class="form-control" type="text" name="address" placeholder="Dirección..">
+							<input class="form-control" type="text" name="address" placeholder="Address..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="city" placeholder="Ciudad..">
+							<input class="form-control" type="text" name="city" placeholder="City..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="state" placeholder="Provincia..">
+							<input class="form-control" type="text" name="state" placeholder="State..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="zipcode" placeholder="Código postal..">
+							<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="country" placeholder="Teléfono..">
+							<input class="form-control" type="text" name="country" placeholder="Zip code..">
 						</div>
 					</div>
 
@@ -42,25 +42,27 @@
 
 			<br>
 			<div class="box-element hidden" id="payment-info">
-				<small>Opciones de Pago</small>
+				<small>Paypal Options</small>
 			</div>
 			
 		</div>
 
 		<div class="col-lg-6">
 			<div class="box-element">
-				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Regresar a carrito</a>
+				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
 				<hr>
-				<h3>Resumen de Orden</h3>
+				<h3>Order Summary</h3>
 				<hr>
+				{% for item in items %}
 				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{% static 'images/placeholder.png' %}"></div>
-					<div style="flex:2"><p>Producto 1</p></div>
-					<div style="flex:1"><p>s/.20.00</p></div>
-					<div style="flex:1"><p>x2</p></div>
+					<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
+					<div style="flex:1"><p>x{{item.quantity}}</p></div>
 				</div>
-				<h5>Items:   2</h5>
-				<h5>Total:   s/.4.00</h5>
+				{% endfor %}
+				<h5>Items:   {{order.get_cart_items}}</h5>
+				<h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5>
 			</div>
 		</div>
 	</div>
